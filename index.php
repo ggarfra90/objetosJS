@@ -24,7 +24,8 @@
                             <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <input type="text" id="txtNombre" name="txt_codigo" class="form-control" value="" maxlength="8"/>
                             </div>
-                            
+                            <input type="hidden" id="txtEditar" name="txtEditar" class="form-control" value="N" maxlength="8"/>
+
                         </div>
                         <div class="form-group col-md-6">
                             <label>Edad</label>

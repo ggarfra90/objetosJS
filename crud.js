@@ -4,13 +4,8 @@
  * and open the template in the editor.
  */
 
-var objPersona= {
-    0:{id:0,nombre:'gianmarco',edad:24,peso:'55kg'},
-    1:{id:1,nombre:'Flor',edad:24,peso:'55kg'},
-    2:{id:3,nombre:'Pedro',edad:17,peso:'50kg'},
-    3:{id:4,nombre:'Juan',edad:18,peso:'65kg'},
-    
-};
+var objPersona= [];
+var count=0;
 $(document).ready(function (){
     cargarObjeto(objPersona);
 });
@@ -19,18 +14,46 @@ function cargarObjeto(data){
     cargarDataTable();
 }
 function crearObjeto(){
-    var objeto=objPersona;
+    var id=count;
     var nombre=$("#txtNombre").val();
     var edad=$("#txtEdad").val();
     var peso=$("#txtPeso").val();
+    var editar=$("#txtEditar").val();
     var objTmp={
+        id:id,
         nombre:nombre,
         edad:edad,
         peso:peso
     }
-    objPersona[objPersona.size]=objTmp;
-    
+   
+    if(editar==='N'){
+    objPersona.push(objTmp);
+  count++;
     cargarObjeto(objPersona);
+}else{
+        for (var i=0;i<objPersona.length;i++){
+            
+                console.log(objPersona[i].id);
+                console.log(objPersona[i].id===parseInt(editar));
+            if(objPersona[i].id===parseInt(editar)){
+                console.log(objPersona[i].id);
+                objPersona[i].nombre=objTmp.nombre;
+                objPersona[i].edad=objTmp.edad;
+                objPersona[i].peso=objTmp.peso;
+            }
+        }
+         cargarObjeto(objPersona);
+     $("#txtEditar").val('N');
+}
+objTmp={};
+}
+function editarObjeto(id){
+    $("#txtNombre").val(objPersona[id].nombre);
+    $("#txtEdad").val(objPersona[id].edad);
+    $("#txtPeso").val(objPersona[id].peso);
+    $("#txtEditar").val(id);
+    
+    
 }
 function onResponseDataTable(data){
     $("#dataList").empty();
@@ -51,7 +74,7 @@ function onResponseDataTable(data){
                 "<td style='text-align:center;'>" + item.edad + "</td>" +
                 "<td style='text-align:center;'>" + item.peso + "</td>" +
                "<td style='text-align:center;'>" +
-                "<a href='#' onclick='cargarDivGetBien(" + item.id + ")'><b><i class='fa fa-edit' style='color:#E8BA2F;'>editar</i><b></a>&nbsp;\n" +
+                "<a href='#' onclick='editarObjeto(" + item.id + ")'><b><i class='fa fa-edit' style='color:#E8BA2F;'>editar</i><b></a>&nbsp;\n" +
                 "<a href='#' onclick='confirmarDeleteBien(" + item.id + ", \"" + item.nombre + "\")'><b><i class='fa fa-trash-o' style='color:#cb2a2a;'>eliminar</i><b></a>" +
                 "</td>" +
                 "</tr>";
